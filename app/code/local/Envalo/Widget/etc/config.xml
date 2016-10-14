@@ -1,25 +1,63 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <config>
     <modules>
         <Envalo_Widget>
-            <version>0.0.1</version>
+            <version>1.1.0</version>
         </Envalo_Widget>
     </modules>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <envalo_widget before="Mage_Adminhtml">Envalo_Widget_Adminhtml</envalo_widget>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <envalo_widget>
+                    <file>envalo/widget.xml</file>
+                </envalo_widget>
+            </updates>
+        </layout>
+        <events>
+            <widget_instance_layout_get_display_on_option>
+                <observers>
+                    <envalo_widget>
+                        <type>singleton</type>
+                        <class>envalo_widget/observer</class>
+                        <method>addDisplayOnOptions</method>
+                    </envalo_widget>
+                </observers>
+            </widget_instance_layout_get_display_on_option>
+            <adminhtml_block_html_before>
+                <observers>
+                    <envalo_widget>
+                        <type>singleton</type>
+                        <class>envalo_widget/observer</class>
+                        <method>addAdditionalEntities</method>
+                    </envalo_widget>
+                </observers>
+            </adminhtml_block_html_before>
+            <widget_instance_layout_get_display_on_containers>
+                <observers>
+                    <envalo_widget>
+                        <type>singleton</type>
+                        <class>envalo_widget/observer</class>
+                        <method>addDisplayOnContainers</method>
+                    </envalo_widget>
+                </observers>
+            </widget_instance_layout_get_display_on_containers>
+        </events>
+    </adminhtml>
+
     <global>
-        <models>
-            <envalo_widget>
-                <class>Envalo_Widget_Model</class>
-                <resourceModel>envalo_widget_resource</resourceModel>
-            </envalo_widget>
-            <envalo_widget_resource>
-                <class>Envalo_Widget_Model_Resource</class>
-            </envalo_widget_resource>
-            <widget>
-                <rewrite>
-                    <widget_instance>Envalo_Widget_Model_Widget_Widget_Instance</widget_instance>
-                </rewrite>
-            </widget>
-        </models>
         <blocks>
             <envalo_widget>
                 <class>Envalo_Widget_Block</class>
@@ -30,11 +68,6 @@
                 </rewrite>
             </widget>
         </blocks>
-        <helpers>
-            <envalo_widget>
-                <class>Envalo_Widget_Helper</class>
-            </envalo_widget>
-        </helpers>
         <events>
             <cms_page_render>
                 <observers>
@@ -45,26 +78,30 @@
                     </envalo_widget>
                 </observers>
             </cms_page_render>
+            <widget_instance_init_after>
+                <observers>
+                    <envalo_widget>
+                        <type>singleton</type>
+                        <class>envalo_widget/observer</class>
+                        <method>addHandles</method>
+                    </envalo_widget>
+                </observers>
+            </widget_instance_init_after>
         </events>
+        <helpers>
+            <envalo_widget>
+                <class>Envalo_Widget_Helper</class>
+            </envalo_widget>
+        </helpers>
+        <models>
+            <envalo_widget>
+                <class>Envalo_Widget_Model</class>
+            </envalo_widget>
+            <widget>
+                <rewrite>
+                    <widget_instance>Envalo_Widget_Model_Widget_Widget_Instance</widget_instance>
+                </rewrite>
+            </widget>
+        </models>
     </global>
-    <adminhtml>
-        <layout>
-            <updates>
-                <envalo_widget>
-                    <file>envalo/widget.xml</file>
-                </envalo_widget>
-            </updates>
-        </layout>
-    </adminhtml>
-    <admin>
-        <routers>
-            <adminhtml>
-                <args>
-                    <modules>
-                        <envalo_widget before="Mage_Widget_Adminhtml">Envalo_Widget_Adminhtml</envalo_widget>
-                    </modules>
-                </args>
-            </adminhtml>
-        </routers>
-    </admin>
 </config>

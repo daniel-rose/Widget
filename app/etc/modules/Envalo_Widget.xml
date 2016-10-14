@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <config>
     <modules>
         <Envalo_Widget>
@@ -7,7 +7,6 @@
             <depends>
                 <Mage_Cms/>
                 <Mage_Widget/>
-
             </depends>
         </Envalo_Widget>
     </modules>

@@ -7,7 +7,7 @@
  * @method bool getUseMassAction()
  * @method setUseAjax($yes_no)
  */
-class Envalo_Widget_Block_Cms_Page_Chooser extends Mage_Adminhtml_Block_Widget_Grid
+class Envalo_Widget_Block_Adminhtml_Cms_Page_Chooser extends Mage_Adminhtml_Block_Widget_Grid
 {
     protected $_selectedPages = array();
 
@@ -21,7 +21,7 @@ class Envalo_Widget_Block_Cms_Page_Chooser extends Mage_Adminhtml_Block_Widget_G
     public function prepareElementHtml(Varien_Data_Form_Element_Abstract $element)
     {
         $uniqId = Mage::helper('core')->uniqHash($element->getId());
-        $sourceUrl = $this->getUrl('*/*/pageschooser', array(
+        $sourceUrl = $this->getUrl('adminhtml/envalo_widget_cms_page_widget/chooser', array(
             'uniq_id' => $uniqId,
             'use_massaction' => false,
         ));
@@ -62,16 +62,10 @@ class Envalo_Widget_Block_Cms_Page_Chooser extends Mage_Adminhtml_Block_Widget_G
             return '
                 function (grid, event) {
                     var trElement = Event.findElement(event, "tr");
-                    var productId = trElement.down("td").innerHTML;
-                    var productName = trElement.down("td").next().next().innerHTML;
-                    var optionLabel = productName;
-                    var optionValue = "product/" + productId.replace(/^\s+|\s+$/g,"");
-                    if (grid.categoryId) {
-                        optionValue += "/" + grid.categoryId;
-                    }
-                    if (grid.categoryName) {
-                        optionLabel = grid.categoryName + " / " + optionLabel;
-                    }
+                    var pageId = trElement.down("td").innerHTML;
+                    var pageName = trElement.down("td").next().next().innerHTML;
+                    var optionLabel = pageName;
+                    var optionValue = "page/" + pageId.replace(/^\s+|\s+$/g,"");
                     '.$chooserJsObject.'.setElementValue(optionValue);
                     '.$chooserJsObject.'.setElementLabel(optionLabel);
                     '.$chooserJsObject.'.close();
@@ -146,7 +140,7 @@ class Envalo_Widget_Block_Cms_Page_Chooser extends Mage_Adminhtml_Block_Widget_G
 
     public function getGridUrl()
     {
-        return $this->getUrl('*/*/pageschooser', array(
+        return $this->getUrl('adminhtml/envalo_widget_cms_page_widget/chooser', array(
             '_current' => true,
             'uniq_id' => $this->getId(),
             'use_massaction' => $this->getUseMassaction()
@@ -171,7 +165,7 @@ class Envalo_Widget_Block_Cms_Page_Chooser extends Mage_Adminhtml_Block_Widget_G
      */
     public function getSelectedPages()
     {
-        if ($selectedPages = $this->getRequest()->getParam('selected_products', null)) {
+        if ($selectedPages = $this->getRequest()->getParam('selected_pages', null)) {
             $this->setSelectedPages($selectedPages);
         }
         return $this->_selectedPages;

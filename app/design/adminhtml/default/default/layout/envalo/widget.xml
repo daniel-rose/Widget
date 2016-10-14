@@ -1,8 +1,9 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <layout>
     <adminhtml_widget_instance_edit>
         <reference name="content">
-            <block name="envalo.widget.shim" type="adminhtml/template" template="envalo/widget/shim.phtml" />
+            <block type="envalo_widget/widget_adminhtml_shim" name="envalo.widget.shim"
+                   template="envalo/widget/shim.phtml"/>
         </reference>
     </adminhtml_widget_instance_edit>
 </layout>
